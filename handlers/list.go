@@ -2,22 +2,22 @@ package handlers
 
 import "net/http"
 
-func CreateList(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) CreateList(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetAllLists(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetAllLists(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetListById(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetListById(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func UpdateList(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) UpdateList(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func DeleteList(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteList(w http.ResponseWriter, r *http.Request) {
 
 }

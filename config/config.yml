@@ -1,1 +1,9 @@
-port: ":4488"
+port: "4488"
+
+db:
+  username: "postgres"
+  password: "butterfly3000"
+  host: "localhost"
+  port: "5436"
+  dbname: "postgres"
+  sslmode: "disable"

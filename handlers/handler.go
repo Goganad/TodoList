@@ -16,18 +16,18 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoutes() *mux.Router {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/auth/signin", h.SignIn).Methods("POST")
-	r.HandleFunc("/auth/signup", h.SignUp).Methods("POST")
-	r.HandleFunc("/api/lists/", h.GetAllLists).Methods("GET")
-	r.HandleFunc("/api/lists/", h.CreateList).Methods("POST")
-	r.HandleFunc("/api/lists/{id}", h.GetListById).Methods("GET")
-	r.HandleFunc("/api/lists/{id}", h.UpdateList).Methods("PUT")
-	r.HandleFunc("/api/lists/{id}", h.DeleteList).Methods("DELETE")
-	r.HandleFunc("/api/lists/{id}/items", h.GetAllItems).Methods("GET")
-	r.HandleFunc("/api/lists/{id}/items", h.CreateItem).Methods("POST")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.GetItemById).Methods("GET")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.UpdateItem).Methods("PUT")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.DeleteItem).Methods("DELETE")
+	r.HandleFunc("/auth/signin", h.signIn).Methods("POST")
+	r.HandleFunc("/auth/signup", h.signUp).Methods("POST")
+	r.HandleFunc("/api/lists/", h.getAllLists).Methods("GET")
+	r.HandleFunc("/api/lists/", h.createList).Methods("POST")
+	r.HandleFunc("/api/lists/{id}", h.getListById).Methods("GET")
+	r.HandleFunc("/api/lists/{id}", h.updateList).Methods("PUT")
+	r.HandleFunc("/api/lists/{id}", h.deleteList).Methods("DELETE")
+	r.HandleFunc("/api/lists/{id}/items", h.getAllItems).Methods("GET")
+	r.HandleFunc("/api/lists/{id}/items", h.createItem).Methods("POST")
+	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.getItemById).Methods("GET")
+	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.updateItem).Methods("PUT")
+	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.deleteItem).Methods("DELETE")
 
 	return r
 }

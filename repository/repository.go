@@ -1,17 +1,19 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/Goganad/TodoList-REST-API/entities"
+	"github.com/jmoiron/sqlx"
+)
 
 type Authorization interface {
-
+	CreateUser(user entities.User) (int, error)
+	GetUser(username, password string) (entities.User, error)
 }
 
 type TodoList interface {
-
 }
 
 type TodoItem interface {
-
 }
 
 type Repository struct {
@@ -21,5 +23,7 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Authorization: NewAuthPostgres(db),
+	}
 }

@@ -32,8 +32,25 @@ func (h *Handler) createList(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (h *Handler) getAllLists(w http.ResponseWriter, r *http.Request) {
+type listsResponse struct {
+	Data []entities.TodoList `json:"data"`
+}
 
+func (h *Handler) getAllLists(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
+
+	lists, err := h.services.TodoList.GetAll(userId)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, listsResponse{
+		Data: lists,
+	})
 }
 
 func (h *Handler) getListById(w http.ResponseWriter, r *http.Request) {

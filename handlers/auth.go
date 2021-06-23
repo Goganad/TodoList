@@ -21,14 +21,14 @@ func (h *Handler) signIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := h.services.GenerateToken(input.Username, input.Password)
+	tokenString, err := h.services.GenerateToken(input.Username, input.Password)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
-		"token": token,
+		"token": tokenString,
 	})
 }
 

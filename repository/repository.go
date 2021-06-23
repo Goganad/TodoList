@@ -11,6 +11,7 @@ type Authorization interface {
 }
 
 type TodoList interface {
+	Create(userId int, list entities.TodoList) (int, error)
 }
 
 type TodoItem interface {

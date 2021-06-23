@@ -8,9 +8,11 @@ import (
 type Authorization interface {
 	CreateUser(user entities.User) (int, error)
 	GenerateToken(username, password string) (string, error)
+	ParseToken(accessToken string) (int, error)
 }
 
 type TodoList interface {
+	Create(userId int, list entities.TodoList) (int, error)
 }
 
 type TodoItem interface {

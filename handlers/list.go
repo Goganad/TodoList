@@ -5,6 +5,7 @@ import (
 )
 
 func (h *Handler) createList(w http.ResponseWriter, r *http.Request) {
+	id := r.Context().Value(userCtx)
 
 }
 

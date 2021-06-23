@@ -16,25 +16,25 @@ func initConfig() error {
 	return viper.ReadInConfig()
 }
 
-func main(){
+func main() {
 	if err := initConfig(); err != nil {
 		log.Fatalf("Error initializing config: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host: viper.GetString("db.host"),
-		Port: viper.GetString("db.port"),
+		Host:     viper.GetString("db.host"),
+		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
 		Password: viper.GetString("db.password"),
-		DBName: viper.GetString("db.dbname"),
-		SSLMode: viper.GetString("db.sslmode"),
+		DBName:   viper.GetString("db.dbname"),
+		SSLMode:  viper.GetString("db.sslmode"),
 	})
 
 	if err != nil {
 		log.Fatalf("Error initializing DB: %s", err.Error())
 	}
 
-	repos:=repository.NewRepository(db)
+	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
 	handlers := handlers.NewHandler(services)
 
@@ -45,6 +45,5 @@ func main(){
 
 }
 
-
 //igornadenenko$ docker run --name=todo-db -e POSTGRES_PASSWORD='butterfly3000' -d --rm postgres
-//migrate -path ./schema -database 'postgres://postgres:butterfly3000@localhost5432/postgres?sslmode-disable' up
+//migrate -path ./schema -database 'postgres://postgres:butterfly3000@localhost:5436/postgres?sslmode=disable' up

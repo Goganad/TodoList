@@ -18,16 +18,16 @@ func (h *Handler) InitRoutes() *mux.Router {
 
 	r.HandleFunc("/auth/signin", h.signIn).Methods("POST")
 	r.HandleFunc("/auth/signup", h.signUp).Methods("POST")
-	r.HandleFunc("/api/lists/", h.getAllLists).Methods("GET")
-	r.HandleFunc("/api/lists/", h.createList).Methods("POST")
-	r.HandleFunc("/api/lists/{id}", h.getListById).Methods("GET")
-	r.HandleFunc("/api/lists/{id}", h.updateList).Methods("PUT")
-	r.HandleFunc("/api/lists/{id}", h.deleteList).Methods("DELETE")
-	r.HandleFunc("/api/lists/{id}/items", h.getAllItems).Methods("GET")
-	r.HandleFunc("/api/lists/{id}/items", h.createItem).Methods("POST")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.getItemById).Methods("GET")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.updateItem).Methods("PUT")
-	r.HandleFunc("/api/lists/{id}/items/{item_id}", h.deleteItem).Methods("DELETE")
+	r.Handle("/api/lists/", h.isAuthenticated(h.getAllLists)).Methods("GET")
+	r.Handle("/api/lists/", h.isAuthenticated(h.createList)).Methods("POST")
+	r.Handle("/api/lists/{id}", h.isAuthenticated(h.getListById)).Methods("GET")
+	r.Handle("/api/lists/{id}", h.isAuthenticated(h.updateList)).Methods("PUT")
+	r.Handle("/api/lists/{id}", h.isAuthenticated(h.deleteList)).Methods("DELETE")
+	r.Handle("/api/lists/{id}/items", h.isAuthenticated(h.getAllItems)).Methods("GET")
+	r.Handle("/api/lists/{id}/items", h.isAuthenticated(h.createItem)).Methods("POST")
+	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.getItemById)).Methods("GET")
+	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.updateItem)).Methods("PUT")
+	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.deleteItem)).Methods("DELETE")
 
 	return r
 }

@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"github.com/Goganad/TodoList-REST-API/entities"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func (h *Handler) createList(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +56,23 @@ func (h *Handler) getAllLists(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) getListById(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	list, err := h.services.TodoList.GetById(userId, listId)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, list)
 }
 
 func (h *Handler) updateList(w http.ResponseWriter, r *http.Request) {

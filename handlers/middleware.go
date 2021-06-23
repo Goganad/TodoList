@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"strings"
 )
@@ -34,4 +35,16 @@ func (h *Handler) isAuthenticated(next http.HandlerFunc) http.Handler {
 		ctx := context.WithValue(r.Context(), userCtx, userId)
 		next(w, r.WithContext(ctx))
 	})
+}
+
+func getUserId(w http.ResponseWriter, ctx context.Context) (int, error) {
+	userId := ctx.Value(userCtx)
+
+	id, ok := userId.(int)
+	if !ok {
+		respondWithError(w, http.StatusInternalServerError, "user id not found")
+		return 0, errors.New("user id not found")
+	}
+
+	return id, nil
 }

@@ -29,7 +29,7 @@ func (r *TodoListPostgres) Create(userId int, list entities.TodoList) (int, erro
 	}
 
 	query = fmt.Sprintf("INSERT INTO %s (user_id, list_id) VALUES ($1, $2)", usersListsTable)
-	_, err = tx.Exec(query)
+	_, err = tx.Exec(query, userId, id)
 	if err != nil {
 		tx.Rollback()
 		return 0, err

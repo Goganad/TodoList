@@ -1,5 +1,7 @@
 package entities
 
+import "errors"
+
 type TodoList struct {
 	Id          int    `json:"id" db:"id"`
 	Title       string `json:"title" db:"title"`
@@ -23,4 +25,16 @@ type ListItem struct {
 	Id     int
 	UserId int
 	ListId int
+}
+
+type UpdateListInput struct {
+	Title       *string `json:"title"`
+	Description *string `json:"description"`
+}
+
+func (u *UpdateListInput) Validate() error {
+	if u.Title == nil && u.Description == nil {
+		return errors.New("update structure is empty")
+	}
+	return nil
 }

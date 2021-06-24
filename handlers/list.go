@@ -76,9 +76,53 @@ func (h *Handler) getListById(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) updateList(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	var input entities.UpdateListInput
+
+	err = parseJsonToStruct(r, &input)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err = h.services.TodoList.Update(userId, listId, input); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }
 
 func (h *Handler) deleteList(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	err = h.services.TodoList.Delete(userId, listId)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }

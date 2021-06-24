@@ -6,6 +6,10 @@ import (
 	"net/http"
 )
 
+type statusResponse struct {
+	Status string `json:"status"`
+}
+
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {

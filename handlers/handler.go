@@ -18,8 +18,8 @@ func (h *Handler) InitRoutes() *mux.Router {
 
 	r.HandleFunc("/auth/signin", h.signIn).Methods("POST")
 	r.HandleFunc("/auth/signup", h.signUp).Methods("POST")
-	r.Handle("/api/lists/", h.isAuthenticated(h.getAllLists)).Methods("GET")
-	r.Handle("/api/lists/", h.isAuthenticated(h.createList)).Methods("POST")
+	r.Handle("/api/lists", h.isAuthenticated(h.getAllLists)).Methods("GET")
+	r.Handle("/api/lists", h.isAuthenticated(h.createList)).Methods("POST")
 	r.Handle("/api/lists/{id}", h.isAuthenticated(h.getListById)).Methods("GET")
 	r.Handle("/api/lists/{id}", h.isAuthenticated(h.updateList)).Methods("PUT")
 	r.Handle("/api/lists/{id}", h.isAuthenticated(h.deleteList)).Methods("DELETE")

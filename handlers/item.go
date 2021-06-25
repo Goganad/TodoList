@@ -66,7 +66,23 @@ func (h *Handler) getAllItems(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) getItemById(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	item, err := h.services.TodoItem.GetById(userId, itemId)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, item)
 }
 
 func (h *Handler) updateItem(w http.ResponseWriter, r *http.Request) {

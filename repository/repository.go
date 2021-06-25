@@ -21,6 +21,7 @@ type TodoList interface {
 type TodoItem interface {
 	Create(listId int, item entities.TodoItem) (int, error)
 	GetAll(userId, listId int) ([]entities.TodoItem, error)
+	GetById(userId, listId int) (entities.TodoItem, error)
 }
 
 type Repository struct {

@@ -25,9 +25,9 @@ func (h *Handler) InitRoutes() *mux.Router {
 	r.Handle("/api/lists/{id}", h.isAuthenticated(h.deleteList)).Methods("DELETE")
 	r.Handle("/api/lists/{id}/items", h.isAuthenticated(h.getAllItems)).Methods("GET")
 	r.Handle("/api/lists/{id}/items", h.isAuthenticated(h.createItem)).Methods("POST")
-	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.getItemById)).Methods("GET")
-	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.updateItem)).Methods("PUT")
-	r.Handle("/api/lists/{id}/items/{item_id}", h.isAuthenticated(h.deleteItem)).Methods("DELETE")
+	r.Handle("/api/items/{id}", h.isAuthenticated(h.getItemById)).Methods("GET")
+	r.Handle("/api/items/{id}", h.isAuthenticated(h.updateItem)).Methods("PUT")
+	r.Handle("/api/items/{id}", h.isAuthenticated(h.deleteItem)).Methods("DELETE")
 
 	return r
 }

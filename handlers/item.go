@@ -86,9 +86,53 @@ func (h *Handler) getItemById(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) updateItem(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	var input entities.UpdateItemInput
+
+	err = parseJsonToStruct(r, &input)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err = h.services.TodoItem.Update(userId, itemId, input); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }
 
 func (h *Handler) deleteItem(w http.ResponseWriter, r *http.Request) {
+	userId, err := getUserId(w, r.Context())
+	if err != nil {
+		return
+	}
 
+	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		return
+	}
+
+	err = h.services.TodoItem.Delete(userId, itemId)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }

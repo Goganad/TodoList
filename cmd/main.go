@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	todo "github.com/Goganad/TodoList-REST-API"
 	"github.com/Goganad/TodoList-REST-API/handlers"
 	"github.com/Goganad/TodoList-REST-API/repository"
@@ -8,6 +9,9 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func initConfig() error {
@@ -39,10 +43,26 @@ func main() {
 	handlers := handlers.NewHandler(services)
 
 	srv := new(todo.Server)
-	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		log.Fatalf("Error occured while running server: %s", err.Error())
+	go func() {
+		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			log.Fatalf("Error occured while running server: %s", err.Error())
+		}
+	}()
+	log.Printf("Server has started")
+
+	quit := make(chan os.Signal)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	log.Printf("Server is shutting down")
+
+	if err := srv.Shutdown(context.Background()); err != nil {
+		log.Fatalf("Error on shutting down server: %s", err.Error())
 	}
 
+	if err := db.Close(); err != nil {
+		log.Fatalf("Error on closing database connection: %s", err.Error())
+	}
 }
 
 //igornadenenko$ docker run --name=todo-db -e POSTGRES_PASSWORD='butterfly3000' -d --rm postgres

@@ -50,7 +50,7 @@ func main() {
 	}()
 	log.Printf("Server has started")
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 

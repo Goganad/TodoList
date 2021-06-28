@@ -7,9 +7,11 @@ import (
 	"strings"
 )
 
+type contextKey string
+
 const (
-	authorizationHeader = "Authorization"
-	userCtx             = "userId"
+	authorizationHeader            = "Authorization"
+	userCtx             contextKey = "userId"
 )
 
 func (h *Handler) isAuthenticated(next http.HandlerFunc) http.Handler {

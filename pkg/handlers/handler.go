@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Goganad/TodoList-REST-API/service"
+	"github.com/Goganad/TodoList-REST-API/pkg/service"
 	"github.com/gorilla/mux"
 )
 

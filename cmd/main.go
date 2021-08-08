@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
-	todo "github.com/Goganad/TodoList-REST-API"
-	"github.com/Goganad/TodoList-REST-API/handlers"
-	"github.com/Goganad/TodoList-REST-API/repository"
-	"github.com/Goganad/TodoList-REST-API/service"
+	"github.com/Goganad/TodoList-REST-API"
+	"github.com/Goganad/TodoList-REST-API/pkg/handlers"
+	"github.com/Goganad/TodoList-REST-API/pkg/repository"
+	"github.com/Goganad/TodoList-REST-API/pkg/service"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
@@ -25,11 +26,15 @@ func main() {
 		log.Fatalf("Error initializing config: %s", err.Error())
 	}
 
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Error loading env variables: %s", err.Error())
+	}
+
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Password: os.Getenv("DB_PASSWORD"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
 	})
@@ -65,5 +70,5 @@ func main() {
 	}
 }
 
-//igornadenenko$ docker run --name=todo-db -e POSTGRES_PASSWORD='butterfly3000' -d --rm postgres
+//docker run --name=todo-db -e POSTGRES_PASSWORD='butterfly3000' -p 5436:5432 -d --rm postgres
 //migrate -path ./schema -database 'postgres://postgres:butterfly3000@localhost:5436/postgres?sslmode=disable' up

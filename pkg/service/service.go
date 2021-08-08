@@ -2,8 +2,14 @@ package service
 
 import (
 	"github.com/Goganad/TodoList-REST-API/entities"
-	"github.com/Goganad/TodoList-REST-API/repository"
+	"github.com/Goganad/TodoList-REST-API/pkg/repository"
 )
+
+type Config struct {
+	Nonce     string
+	TokenTTL  int
+	JwtSecret string
+}
 
 type Authorization interface {
 	CreateUser(user entities.User) (int, error)

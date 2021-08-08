@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Goganad/TodoList-REST-API/entities"
-	"github.com/Goganad/TodoList-REST-API/repository"
+	"github.com/Goganad/TodoList-REST-API/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )

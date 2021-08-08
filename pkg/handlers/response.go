@@ -33,6 +33,11 @@ func parseJsonToStruct(r *http.Request, v interface{}) error {
 	if err := decoder.Decode(v); err != nil {
 		return err
 	}
-	defer r.Body.Close()
+	defer func() {
+		err := r.Body.Close()
+		if err != nil {
+			return
+		}
+	}()
 	return nil
 }

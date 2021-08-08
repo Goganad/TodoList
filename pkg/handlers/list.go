@@ -30,7 +30,7 @@ func (h *Handler) createList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
-		"id": id,
+		idString: id,
 	})
 }
 
@@ -61,7 +61,7 @@ func (h *Handler) getListById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	listId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -81,7 +81,7 @@ func (h *Handler) updateList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	listId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -101,7 +101,7 @@ func (h *Handler) updateList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, statusResponse{
-		Status: "ok",
+		Status: successResponse,
 	})
 }
 
@@ -111,7 +111,7 @@ func (h *Handler) deleteList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	listId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -123,6 +123,6 @@ func (h *Handler) deleteList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, statusResponse{
-		Status: "ok",
+		Status: successResponse,
 	})
 }

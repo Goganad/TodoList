@@ -10,6 +10,12 @@ type statusResponse struct {
 	Status string `json:"status"`
 }
 
+const (
+	tokenString     = "token"
+	idString        = "id"
+	successResponse = "ok"
+)
+
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {

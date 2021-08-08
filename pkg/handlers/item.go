@@ -14,7 +14,7 @@ func (h *Handler) createItem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	listId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -35,7 +35,7 @@ func (h *Handler) createItem(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
-		"id": id,
+		idString: id,
 	})
 }
 
@@ -49,7 +49,7 @@ func (h *Handler) getAllItems(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	listId, err := strconv.Atoi(mux.Vars(r)["id"])
+	listId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -71,7 +71,7 @@ func (h *Handler) getItemById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	itemId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -91,7 +91,7 @@ func (h *Handler) updateItem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	itemId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -111,7 +111,7 @@ func (h *Handler) updateItem(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, statusResponse{
-		Status: "ok",
+		Status: successResponse,
 	})
 }
 
@@ -121,7 +121,7 @@ func (h *Handler) deleteItem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	itemId, err := strconv.Atoi(mux.Vars(r)["id"])
+	itemId, err := strconv.Atoi(mux.Vars(r)[idString])
 	if err != nil {
 		return
 	}
@@ -133,6 +133,6 @@ func (h *Handler) deleteItem(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, statusResponse{
-		Status: "ok",
+		Status: successResponse,
 	})
 }

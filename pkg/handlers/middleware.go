@@ -10,6 +10,7 @@ import (
 type contextKey string
 
 const (
+	validHeadersCount              = 2
 	authorizationHeader            = "Authorization"
 	userCtx             contextKey = "userId"
 )
@@ -23,7 +24,7 @@ func (h *Handler) isAuthenticated(next http.HandlerFunc) http.Handler {
 		}
 
 		headerParts := strings.Split(header, " ")
-		if len(headerParts) != 2 {
+		if len(headerParts) != validHeadersCount {
 			respondWithError(w, http.StatusUnauthorized, "invalid auth header")
 			return
 		}

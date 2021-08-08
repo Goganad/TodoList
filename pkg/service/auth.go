@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	nonce     = "nonagon_infinity9992018"
-	tokenTTL  = 12 * time.Hour
-	jwtSecret = "chunky_shrapnel"
+	nonce    = "nonagon_infinity9992018"
+	tokenTTL = 12 * time.Hour
+	jwtKey   = "chunky_shrapnel"
 )
 
 type AuthService struct {
@@ -48,7 +48,7 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 		user.Id,
 	})
 
-	return token.SignedString([]byte(jwtSecret))
+	return token.SignedString([]byte(jwtKey))
 }
 
 func (s *AuthService) ParseToken(accessToken string) (int, error) {
@@ -56,7 +56,7 @@ func (s *AuthService) ParseToken(accessToken string) (int, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
 		}
-		return []byte(jwtSecret), nil
+		return []byte(jwtKey), nil
 	})
 
 	if err != nil {

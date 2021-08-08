@@ -5,12 +5,6 @@ import (
 	"github.com/Goganad/TodoList-REST-API/pkg/repository"
 )
 
-type Config struct {
-	Nonce     string
-	TokenTTL  int
-	JwtSecret string
-}
-
 type Authorization interface {
 	CreateUser(user entities.User) (int, error)
 	GenerateToken(username, password string) (string, error)

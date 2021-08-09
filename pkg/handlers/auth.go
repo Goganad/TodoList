@@ -49,6 +49,6 @@ func (h *Handler) signUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
-		"id": id,
+		idString: id,
 	})
 }

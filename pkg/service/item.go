@@ -7,15 +7,15 @@ import (
 
 type TodoItemService struct {
 	repo     repository.TodoItem
-	ListRepo repository.TodoList
+	listRepo repository.TodoList
 }
 
 func NewTodoItemService(repo repository.TodoItem, listRepo repository.TodoList) *TodoItemService {
-	return &TodoItemService{repo: repo, ListRepo: listRepo}
+	return &TodoItemService{repo: repo, listRepo: listRepo}
 }
 
 func (s *TodoItemService) Create(userId, listId int, item entities.TodoItem) (int, error) {
-	_, err := s.ListRepo.GetById(userId, listId)
+	_, err := s.listRepo.GetById(userId, listId)
 	if err != nil {
 		return 0, err
 	}

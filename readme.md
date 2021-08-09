@@ -2,11 +2,20 @@
 
 ## Installation
 
-Install Golang and run *cmd/main.go* file
+Build the app and run
 
 ```bash
-go run cmd/main.go
+make build && make run
 ```
+
+## Migration
+
+For first launch migrate the database
+
+```bash
+make migrate
+```
+
 ## Usage
 
 URL address

@@ -21,5 +21,5 @@ make migrate
 URL address
 
 ```bash
-localhost:4488
+localhost:8000
 ```
